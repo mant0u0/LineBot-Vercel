@@ -1,19 +1,42 @@
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import *
 
-import os
-import json
-
-from apps.randomNumber import randomNumberMain
-
-
-line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
-line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
+from linebot.v3 import (
+    WebhookHandler
+)
+from linebot.v3.exceptions import (
+    InvalidSignatureError
+)
+from linebot.v3.messaging import (
+    Configuration,
+    ApiClient,
+    MessagingApi,
+    ReplyMessageRequest,
+    TextMessage
+)
+from linebot.v3.webhooks import (
+    MessageEvent,
+    TextMessageContent
+)
 
 app = Flask(__name__)
 
+line_bot_api = Configuration(access_token='YOUR_CHANNEL_ACCESS_TOKEN')
+line_handler = WebhookHandler('YOUR_CHANNEL_SECRET')
+
+
+# from flask import Flask, request, abort
+# from linebot import LineBotApi, WebhookHandler
+# from linebot.exceptions import InvalidSignatureError
+# from linebot.models import *
+
+import os
+import json
+from apps.randomNumber import randomNumberMain
+
+# line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
+# line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
+
+# app = Flask(__name__)
 
 # domain root
 @app.route('/')
